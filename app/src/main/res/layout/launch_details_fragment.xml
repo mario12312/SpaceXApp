@@ -25,11 +25,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <ImageView
+            android:id="@+id/img_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:alpha="0.8"
-            android:src="@drawable/innerpage_bg"/>
+            android:alpha="0.8"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="34787"
                 android:textColor="@color/mainPageIcons"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/txttitle"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -15,31 +15,7 @@
         android:name="com.example.spacexapp.ui.LaunchDetailsFragment">
         <argument
             app:argType="string"
-            android:name="RocketTitle"
-            android:defaultValue="@null"
-            app:nullable="true"
-            />
-        <argument
-            app:argType="string"
-            android:name="RocketNumber"
-            android:defaultValue="@null"
-            app:nullable="true"
-            />
-        <argument
-            app:argType="string"
-            android:name="RocketDate"
-            android:defaultValue="@null"
-            app:nullable="true"
-            />
-        <argument
-            app:argType="string"
-            android:name="RocketDetails"
-            android:defaultValue="@null"
-            app:nullable="true"
-            />
-        <argument
-            app:argType="string"
-            android:name="ReadMoreUrl"
+            android:name="RocketId"
             android:defaultValue="@null"
             app:nullable="true"
             />

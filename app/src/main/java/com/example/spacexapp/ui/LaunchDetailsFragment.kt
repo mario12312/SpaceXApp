@@ -8,18 +8,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.spacexapp.R
 import com.example.spacexapp.databinding.LaunchDetailsFragmentBinding
+import com.example.spacexapp.exceptions.checkForConnectivity
 import com.example.spacexapp.exceptions.showErrorSnackBar
+import com.example.spacexapp.network.getRocketDetailsApi
+import com.example.spacexapp.network.getRocketsApi
+import com.example.spacexapp.repository.RocketLaunchDetailsRepository
+import com.example.spacexapp.repository.RocketLaunchesRepository
 import com.example.spacexapp.viewmodel.LaunchDetailsViewModel
+import com.example.spacexapp.viewmodel.RocketLaunchesViewModel
+import com.example.spacexapp.viewmodel.factory.RocketLaunchDetailsViewModelFactory
+import com.example.spacexapp.viewmodel.factory.RocketLaunchesViewModelFactory
 
 class LaunchDetailsFragment: Fragment(R.layout.launch_details_fragment) {
 
-    companion object {
-        fun newInstance() = LaunchDetailsFragment()
-    }
     private lateinit var binding: LaunchDetailsFragmentBinding
     private lateinit var viewModel: LaunchDetailsViewModel
     private val args: LaunchDetailsFragmentArgs? by navArgs()
@@ -35,14 +43,6 @@ class LaunchDetailsFragment: Fragment(R.layout.launch_details_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = LaunchDetailsFragmentBinding.bind(view)
 
-        binding.txttitle.text = args!!.rocketTitle
-        binding.txtnumber.text = args!!.rocketNumber
-        binding.txtdate.text = args!!.rocketDate
-        binding.txtdesc.text = args!!.rocketDetails
-
-        binding.readmorebtn.setOnClickListener {
-            args!!.readMoreUrl?.let { it1 -> openNewTabWindow(it1, requireContext()) }
-        }
 
         binding.sharebtn.setOnClickListener {
             showErrorSnackBar("Coming soon!")
@@ -65,6 +65,39 @@ class LaunchDetailsFragment: Fragment(R.layout.launch_details_fragment) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val api = getRocketDetailsApi()
+        val repository = RocketLaunchDetailsRepository(api)
+
+        @Suppress("DEPRECATION")
+        viewModel = ViewModelProviders.of(this, RocketLaunchDetailsViewModelFactory(repository))
+            .get(LaunchDetailsViewModel::class.java)
+
+        if(checkForConnectivity(requireContext())){
+            viewModel.getRocketDetails(args?.rocketId.toString())
+            getRocketDetails()
+        }else{
+            showErrorSnackBar("Please check your internet connection.")
+        }
+    }
+
+    private fun getRocketDetails() {
+        viewModel.rocketDetails.observe(viewLifecycleOwner, Observer { rocketdetails ->
+            if (rocketdetails != null){
+                for(rocket in rocketdetails){
+                    if(rocket.active){
+                        binding.txttitle.text = rocket.name
+                        binding.txtnumber.text = rocket.id
+                        binding.txtdesc.text = rocket.description
+
+                        Glide.with(this).load(rocket.flickrImages[0]).into(binding.imgBg)
+
+                        binding.readmorebtn.setOnClickListener {
+                            openNewTabWindow(rocket.wikipedia,requireContext())
+                        }
+                    }
+                }
+            }
+        })
     }
 
 }

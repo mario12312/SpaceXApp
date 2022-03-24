@@ -141,11 +141,7 @@ OnRocketSelectedListener{
         findNavController().navigate(
             R.id.LaunchDetailsFragment,
             bundleOf(
-                "RocketTitle" to rocketsLaunchesResponseItem.name,
-                "RocketNumber" to rocketsLaunchesResponseItem.flightNumber.toString(),
-                "RocketDate" to rocketsLaunchesResponseItem.dateUtc,
-                "RocketDetails" to rocketsLaunchesResponseItem.details,
-                "ReadMoreUrl" to rocketsLaunchesResponseItem.links.article,
+                "RocketId" to rocketsLaunchesResponseItem.id
             ),
             AppUtil.getNavOptions()
         )
