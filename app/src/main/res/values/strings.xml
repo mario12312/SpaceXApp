@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SpaceXApp</string>
+
+    <string name="error_no_internet">Please check your internet connection.</string>
+    <string name="launches">Launches</string>
+    <string name="the_big_launch">The Big Launch</string>
+</resources>

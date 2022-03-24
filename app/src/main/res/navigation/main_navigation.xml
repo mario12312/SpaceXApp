@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/rocketsLaunchesFragment">
+
+    <fragment
+        android:id="@+id/rocketsLaunchesFragment"
+        android:label="rocketsLaunchesFragment"
+        android:name="com.example.spacexapp.ui.RocketLaunchesFragment"/>
+
+    <fragment
+        android:id="@+id/LaunchDetailsFragment"
+        android:label="rocketsLauncheDetailsFragment"
+        android:name="com.example.spacexapp.ui.LaunchDetailsFragment">
+        <argument
+            app:argType="string"
+            android:name="RocketTitle"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+        <argument
+            app:argType="string"
+            android:name="RocketNumber"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+        <argument
+            app:argType="string"
+            android:name="RocketDate"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+        <argument
+            app:argType="string"
+            android:name="RocketDetails"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+        <argument
+            app:argType="string"
+            android:name="ReadMoreUrl"
+            android:defaultValue="@null"
+            app:nullable="true"
+            />
+    </fragment>
+
+</navigation>
